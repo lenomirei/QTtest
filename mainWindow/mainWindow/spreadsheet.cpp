@@ -113,7 +113,6 @@ void Spreadsheet::sort(const SpreadsheetCompare &compare)
 		for (int j = 0; j < range.columnCount(); ++j)
 		{
 			row.append(formula(range.topRow() + i, range.leftColumn() + j));
-
 		}
 		rows.append(row);
 	}
@@ -245,7 +244,18 @@ void Spreadsheet::selectCurrentRow()
 	selectRow(currentRow());
 }
 void Spreadsheet::recalculate()
-{}
+{
+	for (int row = 0; row < RowCount; ++row)
+	{
+		for (int column = 0; column < ColumnCount; ++column)
+		{
+			if (cell(row, column))
+			{
+				cell(row, column)->setDirty();
+			}
+		}
+	}
+}
 void Spreadsheet::setAutoRecalculate(bool recalc)
 {
 	autoRecalc = recalc;
@@ -308,10 +318,6 @@ void Spreadsheet::somethingChanged()
 	emit modified();
 }
 
-Spreadsheet::~Spreadsheet()
-{
-
-}
 
 
 bool SpreadsheetCompare::operator()(const QStringList row1, const QStringList &row2) const
@@ -336,4 +342,9 @@ bool SpreadsheetCompare::operator()(const QStringList row1, const QStringList &r
 		}
 	}
 	return false;
+}
+
+Spreadsheet::~Spreadsheet()
+{
+
 }
