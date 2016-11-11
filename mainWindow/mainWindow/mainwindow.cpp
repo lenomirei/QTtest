@@ -6,7 +6,7 @@
 #include "sort.h"
 #include "spreadsheet.h"
 mainWindow::mainWindow(QWidget *parent)
-	: QMainWindow(parent)
+: QMainWindow(parent)
 {
 	spreadsheet = new Spreadsheet(this);
 	setCentralWidget(spreadsheet);
@@ -19,19 +19,9 @@ mainWindow::mainWindow(QWidget *parent)
 	findDialog = 0;
 	//setWindowIcon
 	setCurrentFile("");
-	setAttribute(Qt::WA_DeleteOnClose);
-	/*Q_FOREACH (QWidget *win ,QApplication::topLevelWidgets())
-	{
-		if (mainWindow *mainWin = qobject_cast<mainWindow *>(win))
-			mainWin->updateRecentFileActions();
-	}*/
 }
 
 
-mainWindow::~mainWindow()
-{
-
-}
 void mainWindow::createActions()
 {
 	newAction = new QAction(tr("&New"), this);
@@ -197,13 +187,13 @@ void mainWindow::createMenus()
 	editMenu->addAction(findAction);
 	editMenu->addAction(goToCellAction);
 
-	toolMenu = menuBar()->addMenu(tr("&Tools"));
-	toolMenu->addAction(recalculateAction);
-	toolMenu->addAction(sortAction);
-	
-	optionMenu = menuBar()->addMenu(tr("&Options"));
-	optionMenu->addAction(showGridAction);
-	optionMenu->addAction(autoRecalcAction);
+	toolsMenu = menuBar()->addMenu(tr("&Tools"));
+	toolsMenu->addAction(recalculateAction);
+	toolsMenu->addAction(sortAction);
+
+	optionsMenu = menuBar()->addMenu(tr("&Options"));
+	optionsMenu->addAction(showGridAction);
+	optionsMenu->addAction(autoRecalcAction);
 
 	menuBar()->addSeparator();
 
@@ -434,17 +424,17 @@ void mainWindow::find()
 }
 void mainWindow::goToCell()
 {
-	celldialog *dialog=new celldialog(this);
-	if (dialog->exec())
+	celldialog dialog(this);
+	if (dialog.exec())
 	{
-		QString str = dialog->getUi().lineEdit->text().toUpper();
+		QString str = dialog.getUi().lineEdit->text().toUpper();
 		spreadsheet->setCurrentCell(str.mid(1).toInt() - 1, str[0].unicode() - 'A');
 	}
-	delete dialog;
+	//delete dialog;
 }
 void mainWindow::sort()
 {
-	Sort dialog = new Sort(this);
+	Sort dialog(this);
 	QTableWidgetSelectionRange range = spreadsheet->selectedRange();
 
 	dialog.setColumnRange('A' + range.leftColumn(), 'A' + range.rightColumn());

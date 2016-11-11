@@ -13,7 +13,6 @@ class mainWindow : public QMainWindow
 
 public:
 	mainWindow(QWidget *parent = 0);
-	~mainWindow();
 protected:
 	void closeEvent(QCloseEvent *event);
 	private slots:
@@ -83,8 +82,8 @@ private:
 	QMenu *fileMenu;
 	QMenu *editMenu;
 	QMenu *selectSubMenu;
-	QMenu *toolMenu;
-	QMenu *optionMenu;
+	QMenu *toolsMenu;
+	QMenu *optionsMenu;
 	QMenu *helpMenu;
 
 	QToolBar *fileToolBar;

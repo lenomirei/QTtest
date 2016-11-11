@@ -2,7 +2,7 @@
 
 #include "spreadsheet.h"
 Spreadsheet::Spreadsheet(QWidget *parent)
-	: QTableWidget(parent)
+: QTableWidget(parent)
 {
 	autoRecalc = true;
 	setItemPrototype(new Cell);
@@ -36,7 +36,7 @@ QString Spreadsheet::currentFormula() const
 }
 QTableWidgetSelectionRange Spreadsheet::selectedRange() const
 {
-	QList<QTableWidgetSelectionRange> range= selectedRanges();
+	QList<QTableWidgetSelectionRange> range = selectedRanges();
 	if (range.isEmpty())
 	{
 		return QTableWidgetSelectionRange();
@@ -107,7 +107,7 @@ void Spreadsheet::sort(const SpreadsheetCompare &compare)
 	QList<QStringList> rows;
 	QTableWidgetSelectionRange range = selectedRange();
 	int i;
-	for (i = 0; i < range.columnCount(); ++i)
+	for (i = 0; i < range.rowCount(); ++i)
 	{
 		QStringList row;
 		for (int j = 0; j < range.columnCount(); ++j)
@@ -231,7 +231,7 @@ void Spreadsheet::del()
 	QList<QTableWidgetItem *> items = selectedItems();
 	if (!items.isEmpty())
 	{
-		foreach(QTableWidgetItem *item,items)
+		foreach(QTableWidgetItem *item, items)
 			delete item;
 		somethingChanged();
 	}
